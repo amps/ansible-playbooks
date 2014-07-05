@@ -9,17 +9,36 @@ set -u
 
 # Utilities
 
-###### Arguments: ($1=prompt, $2=suggestion, $3=variable)
+###### Arguments: ($1=prompt, $2=suggestion, $3=variable, ${*:4}=extra)
 ask() {
-    read -p "$1: ($2) " temp
+    read ${*:4} -p "$1: ($2) " temp 
     declare -g $3=${temp:-$2}
 }
 
+genpasswd() {
+    declare -g passwd=$(openssl rand -base64 15)
+}
+
+
+vault_file=".vault"
+
+if [ -f "$vault_file" ]; then
+    echo "Nothing to do for ${vault_file}"
+else
+    echo "Generating vault password"
+    genpasswd
+    echo "$passwd" > $vault_file
+    echo "Wrote vault password to ${vault_file}"
+fi
+
 # user.yml
 user_yml_file="user.yml"
-if [ ! -f $user_yml_file ]; then
+if [ -f "$user_yml_file" ]; then
+    echo "Nothing to do for ${user_yml_file}"
+else
 ask "User name" "ansible" user_name
-read -sp "User pass: " user_pass
+genpasswd
+ask "User pass" "$passwd" user_pass -s
 touch $user_yml_file
 template=$(cat<<EOF
 ---
@@ -28,7 +47,18 @@ password: '$user_pass'
 EOF
 )
 
+echo "Creating ${user_yml_file}"
 echo "$template" > $user_yml_file
-ansible-vault encrypt $user_yml_file
+echo "Encrypting ${user_yml_file}"
+ansible-vault encrypt  --vault-password-file=${vault_file} $user_yml_file
+fi
 
+# hosts
+hosts_file="hosts"
+if [ -f "$hosts_file" ]; then
+    echo "Nothing to do for ${hosts_file}"
+else
+    touch $hosts_file
+    echo "Encrypting ${hosts_file}"
+    ansible-vault encrypt --vault-password-file=${vault_file} $hosts_file
 fi
