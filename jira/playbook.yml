@@ -1,0 +1,13 @@
+---
+-   name: Download and Install
+    hosts: jira
+    vars:
+        product: jira
+        version: 6.2.7
+        installer: atlassian-${product}-${version}-x64.bin
+        url: http://www.atlassian.com/software/${product}/downloads/binary/$installer
+    tasks:
+        -   name: Download
+            get_url:    url=$url
+                        dest=/var/tmp/$installer
+                        mode=0644
