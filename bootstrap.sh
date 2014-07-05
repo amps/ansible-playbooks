@@ -15,43 +15,6 @@ ask() {
     declare -g $3=${temp:-$2}
 }
 
-# Ansible
-
-## Check if ansible is installed
-if ! [ hash ansible 2>/dev/null ]; then
-    ## Install ansible
-
-    
-    ansible_stdlib_dir="$(pwd)/ansible-std-lib"
-    if [ -d "$ansible_stdlib_dir" ]; then
-
-    else
-
-    ### Create standard library folder
-    mkdir -p $ansible_stdlib_dir
-
-    ### Do all work in a new directory
-    mkdir -p .ansible-tmp
-    cd .ansible-tmp
-    ### Download the latest release
-    curl -o ansible.tar.gz http://releases.ansible.com/ansible/ansible-latest.tar.gz
-    mkdir -p ansible-src
-    tar xvfz ansible.tar.gz --directory ansible-src --strip-components=1
-    cd ansible-src
-    echo "its ${ansible_stdlib_dir}"
-    ### Install
-    ANSIBLE_LIBRARY=${ansible_stdlib_dir} python setup.py install --force --user
-    
-    ### Go back to the base directory
-    cd -
-    cd ..
-
-    ### Delete the installation directory
-    rm -rf .ansible-tmp
-fi
-
-fi
-
 # user.yml
 user_yml_file="user.yml"
 if [ ! -f $user_yml_file ]; then
