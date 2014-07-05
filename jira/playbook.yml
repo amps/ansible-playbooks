@@ -4,10 +4,22 @@
     vars:
         product: jira
         version: 6.2.7
-        installer: atlassian-${product}-${version}-x64.bin
-        url: http://www.atlassian.com/software/${product}/downloads/binary/$installer
+        rmiPort: 8097
+        httpPort: 80
+        installer: atlassian-{{product}}-{{version}}-x64.bin
+        url: http://www.atlassian.com/software/{{product}}/downloads/binary/{{installer}}
     tasks:
-        -   name: Download
+        -   name:       Download
             get_url:    url=$url
-                        dest=/var/tmp/$installer
+                        dest=/var/tmp/{{installer}}
                         mode=0644
+
+        -   template:   src=templates/response.varfile.j2
+                        dest=/var/tmp/{{product}}-response.varfile
+
+        -   file:       path=/var/tmp/{{installer}}
+                        mode=0755
+
+        -   name:       Install
+            command:    /var/tmp/{{installer}} -q -varfile /var/tmp/{{product}}-response.varfile
+                        creates=/opt/atlassian/{{product}}
