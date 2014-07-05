@@ -10,7 +10,7 @@
         url: http://www.atlassian.com/software/{{product}}/downloads/binary/{{installer}}
     tasks:
         -   name:       Download
-            get_url:    url=$url
+            get_url:    url={{url}}
                         dest=/var/tmp/{{installer}}
                         mode=0644
 
