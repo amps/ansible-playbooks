@@ -1,4 +1,5 @@
 ---
+-   hosts: all
 -   vars_files:
         - "user.yml"
 -   include: common.yml
