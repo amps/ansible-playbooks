@@ -1,7 +1,4 @@
 ---
--   hosts: all
--   vars_files:
-        - "user.yml"
 -   include: common.yml
 -   include: setup.yml
 -   include: atlassian.yml

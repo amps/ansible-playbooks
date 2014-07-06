@@ -33,7 +33,7 @@ else
 fi
 
 # user.yml
-user_yml_file="user.yml"
+user_yml_file="./roles/common/vars/user.yml"
 if [ -f "$user_yml_file" ]; then
     echo "Nothing to do for ${user_yml_file}"
 else
