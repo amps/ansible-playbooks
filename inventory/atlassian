@@ -3,10 +3,10 @@
 [jira:children]
 atlas
 
-[stash]
+[stash:children]
 atlas
 
-[confluence]
+[confluence:children]
 atlas
 
 [atlassian:children]
