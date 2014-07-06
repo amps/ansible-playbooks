@@ -1,14 +1,13 @@
 ---
--   hosts: all
-    user: root
-    tasks:
       - name: Setup | create user
         command: useradd -n {{ user }} creates=/home/{{ user }}
         sudo: true
+        user: root
 
       - name: Setup | set user password
         shell: usermod -p $(echo '{{ password }}' | openssl passwd -1 -stdin) {{ user }}
         sudo: true
+        user: root
      
       - name: Sudoers | update sudoers file and validate
         lineinfile: "dest=/etc/sudoers
@@ -17,3 +16,4 @@
           regexp='{{ user }} ALL=(ALL) NOPASSWD: ALL'
           state=present"
         sudo: true
+        user: root
