@@ -1,5 +1,4 @@
 ---
--   include: common.yml
 -   hosts: atlassian
     roles:
         - common
