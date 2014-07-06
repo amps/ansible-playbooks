@@ -12,9 +12,9 @@
 
 
       - name: Setup | authorized key upload
-        authorized_key: user={{ ansible_user.user }}
+        authorized_key: user={{ ansible_user.name }}
           key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-          path='/home/{{ ansible_user.user }}/.ssh/authorized_keys'
+          path='/home/{{ ansible_user.name }}/.ssh/authorized_keys'
           manage_dir=no
         sudo: true
      
