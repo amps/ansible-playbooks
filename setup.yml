@@ -1,5 +1,5 @@
 ---
--   hosts: all:!localhost
+-   hosts: all:!localhost:!ansible-master
     remote_user: root
     tasks:
       - name: Create user
