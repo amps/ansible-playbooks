@@ -3,7 +3,7 @@
     remote_user: root
     tasks:
       - name: Create user
-        command: useradd -n {{ ansible_user.name }} creates=/home/{{ user }}
+        command: useradd -n {{ ansible_user.name }} creates=/home/{{ ansible_user.name }}
         sudo: true
 
       - name: Set user password
