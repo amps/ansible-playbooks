@@ -9,6 +9,12 @@
       - name: Set user password
         shell: usermod -p $(echo '{{ ansible_user.pass }}' | openssl passwd -1 -stdin) {{ ansible_user.name }}
         sudo: true
+      - name: Setup | authorized key upload
+        authorized_key: user={{ ansible_user.user }}
+          key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+          path='/home/{{ ansible_user.user }}/.ssh/authorized_keys'
+          manage_dir=no
+        sudo: true
      
       - name: Sudoers | update sudoers file and validate
         lineinfile: "dest=/etc/sudoers
