@@ -1,0 +1,15 @@
+---
+-   hosts: atlassian
+    roles:
+        - common
+-   hosts:  jira
+    roles:
+        - jira
+
+-   hosts:  stash
+    roles:
+        - stash
+
+-   hosts:  confluence
+    roles:
+        - confluence

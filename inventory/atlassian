@@ -1,0 +1,15 @@
+[atlas]
+
+[jira:children]
+atlas
+
+[stash]
+atlas
+
+[confluence]
+atlas
+
+[atlassian:children]
+jira
+stash
+confluence

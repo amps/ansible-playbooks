@@ -20,6 +20,7 @@ genpasswd() {
 }
 
 
+
 vault_file=".vault"
 
 if [ -f "$vault_file" ]; then
@@ -51,14 +52,4 @@ echo "Creating ${user_yml_file}"
 echo "$template" > $user_yml_file
 echo "Encrypting ${user_yml_file}"
 ansible-vault encrypt  --vault-password-file=${vault_file} $user_yml_file
-fi
-
-# hosts
-hosts_file="hosts"
-if [ -f "$hosts_file" ]; then
-    echo "Nothing to do for ${hosts_file}"
-else
-    touch $hosts_file
-    echo "Encrypting ${hosts_file}"
-    ansible-vault encrypt --vault-password-file=${vault_file} $hosts_file
 fi
