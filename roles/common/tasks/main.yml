@@ -1,2 +1,3 @@
 ---
 - include_vars: user.yml
+- remote_user: root
