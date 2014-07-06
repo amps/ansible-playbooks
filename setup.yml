@@ -2,18 +2,18 @@
 -   hosts: all:!localhost
     user: root
     tasks:
-      - name: Setup | create user
-        command: useradd -n {{ user }} creates=/home/{{ user }}
+      - name: Create user
+        command: useradd -n {{ ansible_user.name }} creates=/home/{{ user }}
         sudo: true
 
-      - name: Setup | set user password
-        shell: usermod -p $(echo '{{ password }}' | openssl passwd -1 -stdin) {{ user }}
+      - name: Set user password
+        shell: usermod -p $(echo '{{ ansible_user.pass }}' | openssl passwd -1 -stdin) {{ ansible_user.name }}
         sudo: true
      
       - name: Sudoers | update sudoers file and validate
         lineinfile: "dest=/etc/sudoers
           insertafter=EOF
-          line='{{ user }} ALL=(ALL) NOPASSWD: ALL'
-          regexp='{{ user }} ALL=(ALL) NOPASSWD: ALL'
+          line='{{ ansible_user.name }} ALL=(ALL) NOPASSWD: ALL'
+          regexp='{{ ansible_user.name }} ALL=(ALL) NOPASSWD: ALL'
           state=present"
         sudo: true

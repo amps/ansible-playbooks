@@ -43,8 +43,9 @@ ask "User pass" "$passwd" user_pass -s
 touch $user_yml_file
 template=$(cat<<EOF
 ---
-user: '$user_name'
-password: '$user_pass'
+ansible_user:
+    name: '$user_name'
+    pass: '$user_pass'
 EOF
 )
 
