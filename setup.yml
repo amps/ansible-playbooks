@@ -1,5 +1,5 @@
 ---
--   hosts: all
+-   hosts: all:!localhost
     user: root
     tasks:
       - name: Setup | create user
